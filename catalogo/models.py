@@ -66,9 +66,8 @@ class Libro(models.Model):
         Un préstamo es "activo" cuando no se ha registrado devolución.
         """
         # TODO: implementar con ORM usando filter sobre los préstamos relacionados
-        # Pista: self.prestamo_set.filter(fecha_devolucion__isnull=True).count()
-        #        (o el related_name que hayas definido en Prestamo.libro)
-        return self.prestamo_set.filter(fecha_devolucion__isnull=True).count()
+        # Pista: self.prestamos.filter(fecha_devolucion__isnull=True).count()
+        return self.prestamos.filter(fecha_devolucion__isnull=True).count()
         
     
     def disponibles(self) -> int:
@@ -114,8 +113,8 @@ class Prestamo(models.Model):
     # Tip: podés usar default=timezone.now si querés fecha automática,
     #      o dejarlo sin default para que el test lo defina explícitamente.
 
-    libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
-    fecha_prestamo = models.DateField( default=timezone.now )
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE, related_name="prestamos")
+    fecha_prestamo = models.DateField(default=timezone.now)
     fecha_devolucion = models.DateField(null=True, blank=True)
     nombre_prestatario = models.CharField(max_length=100)
 
