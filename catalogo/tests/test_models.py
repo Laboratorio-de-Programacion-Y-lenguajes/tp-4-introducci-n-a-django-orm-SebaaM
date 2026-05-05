@@ -6,7 +6,7 @@ from django.test import TestCase
 
 from catalogo.models import Autor, Categoria, Libro, Prestamo
 
-
+# pylint: disable=no-member
 class ModelsTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
